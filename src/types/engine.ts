@@ -115,6 +115,8 @@ export interface EngineSpec {
    */
   firingIntervalsDeg?: number[];
   cylinderMap: CylinderSlot[];
+  /** Axial distance between consecutive crank slots (mm), when published. */
+  slotPitchMm?: number;
   crankType: string;
   lubrication: Lubrication;
   fuelSystem: string;
