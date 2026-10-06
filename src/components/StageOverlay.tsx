@@ -1,3 +1,4 @@
+import { useShallow } from 'zustand/react/shallow';
 import { useApp, type CameraPresetName, type ViewMode, TIME_SCALES } from '../state/appStore';
 import { useTelemetry } from '../state/simulationStore';
 import type { EngineDefinition } from '../types/engine';
@@ -26,7 +27,26 @@ const CAMS: { id: CameraPresetName; label: string }[] = [
 ];
 
 export function StageOverlay({ def }: { def: EngineDefinition }) {
-  const s = useApp();
+  const s = useApp(
+    useShallow((x) => ({
+      viewMode: x.viewMode,
+      housingOpacity: x.housingOpacity,
+      explode: x.explode,
+      cutAxis: x.cutAxis,
+      cutPosition: x.cutPosition,
+      highlight: x.highlight,
+      showFuelSystem: x.showFuelSystem,
+      identify: x.identify,
+      combustionGlow: x.combustionGlow,
+      flows: x.flows,
+      timeScale: x.timeScale,
+      tour: x.tour,
+      set: x.set,
+      setViewMode: x.setViewMode,
+      requestCamera: x.requestCamera,
+      toggleFlow: x.toggleFlow,
+    })),
+  );
   const t = useTelemetry((x) => x.t);
   const forced = def.engine.aspiration !== 'na';
   const fastHint = t && t.running && t.rpm * s.timeScale > 2500 && (s.viewMode === 'pistons' || s.viewMode === 'internals' || s.viewMode === 'cutaway');

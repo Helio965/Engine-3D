@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import type { EngineDefinition, EngineId, FactStatus } from '../types/engine';
 import { useApp, type GraphicsQuality } from '../state/appStore';
 import { ENGINES, getEngine } from '../data/engines';
@@ -192,7 +193,9 @@ function ComparePanel() {
 }
 
 function SettingsPanel() {
-  const s = useApp();
+  const s = useApp(
+    useShallow((x) => ({ graphics: x.graphics, fps: x.fps, volume: x.volume, reduceMotion: x.reduceMotion, vibration: x.vibration, set: x.set })),
+  );
   const q: GraphicsQuality[] = ['low', 'medium', 'high', 'ultra'];
   return (
     <>

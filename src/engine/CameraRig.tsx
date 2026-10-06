@@ -83,9 +83,11 @@ export function CameraRig({ ctx, mod }: { ctx: EngineModelContext | null; mod: E
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [req]);
 
-  // expose for the guided tour
-  useFrame(() => {
+  // intro: slow orbit while the engine is revealed; also expose for scripted checks
+  useFrame((_, delta) => {
     (window as unknown as { __cam?: CameraControlsImpl | null }).__cam = ref.current;
+    const s = useApp.getState();
+    if (s.phase === 'intro' && ref.current && !s.reduceMotion) ref.current.rotate(delta * 0.12, 0, false);
   });
 
   return (

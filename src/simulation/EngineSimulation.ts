@@ -473,7 +473,16 @@ export class EngineSimulation {
       if (this.random() < pMisfire * h * 40) this.misfire = !this.misfire;
     } else this.misfire = false;
 
-    this.combusting = running && !this.outOfFuel && !this.fuelCut && !this.misfire;
+    // deceleration fuel cut-off (closed throttle well above idle), as real ECUs do
+    const idleTarget = p.idleRpm * (1 + 0.32 * this.startFlare);
+    if (pedal < 0.01 && this.rpm > idleTarget + 450) this.decelCut = true;
+    else if (pedal >= 0.01 || this.rpm < idleTarget + 220) this.decelCut = false;
+    // idle spark-retard authority: trims torque when closed-throttle airflow alone is too much
+    const over = Math.max(0, (this.rpm - idleTarget) / idleTarget);
+    const retardTarget = pedal < 0.02 && running ? Math.max(0.3, 1 - 2.2 * over) : 1;
+    this.sparkEff += (retardTarget - this.sparkEff) * (1 - Math.exp(-h / 0.08));
+
+    this.combusting = running && !this.outOfFuel && !this.fuelCut && !this.misfire && !this.decelCut;
 
     // --- forced induction ----------------------------------------------------
     this.stepInduction(h, pedal);
@@ -486,7 +495,7 @@ export class EngineSimulation {
     const pumping = pumpingTorque(this.manifold, e.displacementCc);
     let tInd = 0;
     if (this.combusting) {
-      tInd = indicatedTorque(fullLoad, friction, boostSS, this.manifold, this.boost) * this.shiftCut;
+      tInd = indicatedTorque(fullLoad, friction, boostSS, this.manifold, this.boost) * this.shiftCut * this.sparkEff;
       if (this.speedCut) tInd = Math.min(tInd, friction + pumping + 0.25 * fullLoad);
     }
     this.torqueInd = tInd;
@@ -546,6 +555,8 @@ export class EngineSimulation {
   }
 
   private effectivePedal = 0;
+  private decelCut = false;
+  private sparkEff = 1;
   private fuelGps = 0;
   private runTime = 0;
 
