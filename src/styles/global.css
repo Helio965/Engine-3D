@@ -1,0 +1,7 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0c0e;
+  --text: #e8e4dc;
+}
+html, body, #root { height: 100%; margin: 0; background: var(--bg); color: var(--text); }
+.boot { display: grid; place-items: center; height: 100%; font-family: system-ui, sans-serif; }
