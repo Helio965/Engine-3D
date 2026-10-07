@@ -33,41 +33,6 @@ function base(over: Partial<EngineDefinition> & Pick<EngineDefinition, 'id' | 'm
 
 const T = (size: string) => tireRadius(size);
 
-export const provisionalHellcat = base({
-  id: 'dodge-challenger-hellcat',
-  manufacturer: 'Dodge',
-  vehicle: 'Challenger SRT Hellcat',
-  headline: '6.2 V8 HEMI SUPERCHARGED',
-  engine: {
-    name: 'Supercharged 6.2L HEMI V8', code: 'Hellcat', layout: 'v', cylinders: 8, bankAngleDeg: 90, displacementCc: 6166, boreMm: 103.9, strokeMm: 90.9, rodLengthMm: 155.5, rodLengthStatus: 'estimated',
-    compressionRatio: 9.5, valvesPerCylinder: 2, valvetrain: 'ohv', aspiration: 'supercharged',
-    supercharger: { type: 'twin-screw', displacementL: 2.38, maxBoostBar: 0.8, maxBoostStatus: 'estimated', driveRatio: 2.36, driveRatioStatus: 'estimated' },
-    firingOrder: [1, 8, 4, 3, 6, 5, 7, 2], firingOrderStatus: 'estimated', cylinderMap: vMap(4, [1, 3, 5, 7], [2, 4, 6, 8]), crankType: 'cross-plane', lubrication: 'wet', fuelSystem: 'port', inertiaKgM2: 0.24,
-  },
-  performance: { powerPs: 717, powerHp: 707, powerKw: 527, powerRpm: 6000, torqueNm: 881, torqueRpm: 4800, idleRpm: 700, idleStatus: 'estimated', redlineRpm: 6200, revLimitRpm: 6200 },
-  drivetrain: { transmission: '8HP90', kind: 'automatic', ratios: [4.71, 3.14, 2.1, 1.67, 1.29, 1.0, 0.84, 0.67], reverseRatio: 3.3, finalDrive: 2.62, ratiosStatus: 'estimated', paddleShift: true, driveLayout: 'RWD', rearTire: '275/40 ZR20', tireRadiusM: T('275/40 ZR20'), shiftTimeS: 0.22, efficiency: 0.85 },
-  vehicleSpec: { topSpeedKmh: 320, topSpeedLimited: false, curbWeightKg: 2018, dragAreaM2: calibratedDragArea(527, 320, 2018, 0.85), rollingResistance: 0.012, fuelTankL: 70, fuelType: 'Gasolina', enginePosition: 'Dianteiro' },
-  dashboard: { style: 'hellcat', speedoMaxKmh: 322, speedoUnit: 'mph', speedoMaxNative: 200, tachMaxRpm: 7000, tachRedlineStartRpm: 6200, hasShiftLights: false, reference: 'Provisório.' },
-  soundProfile: 'v8-cross-supercharged',
-});
-
-export const provisionalZz632 = base({
-  id: 'chevrolet-zz632',
-  manufacturer: 'Chevrolet Performance',
-  vehicle: 'ZZ632/1000',
-  headline: '10.4 V8 BIG-BLOCK ASPIRADO',
-  isCrateEngine: true,
-  engine: {
-    name: 'ZZ632/1000 Big-Block V8', code: 'ZZ632/1000', layout: 'v', cylinders: 8, bankAngleDeg: 90, displacementCc: 10354, boreMm: 116.84, strokeMm: 120.65, rodLengthMm: 170, rodLengthStatus: 'estimated',
-    compressionRatio: 12, valvesPerCylinder: 2, valvetrain: 'ohv', aspiration: 'na', firingOrder: [1, 8, 4, 3, 6, 5, 7, 2], firingOrderStatus: 'estimated',
-    cylinderMap: vMap(4, [1, 3, 5, 7], [2, 4, 6, 8]), crankType: 'cross-plane', lubrication: 'wet', fuelSystem: 'port', inertiaKgM2: 0.3,
-  },
-  performance: { powerPs: 1018, powerHp: 1004, powerKw: 749, powerRpm: 6600, torqueNm: 1188, torqueRpm: 5600, idleRpm: 900, idleStatus: 'estimated', redlineRpm: 7000, revLimitRpm: 7000 },
-  fuel: { capacityL: 30, capacityStatus: 'estimated', label: 'Célula de combustível de bancada', fuelType: 'Gasolina' },
-  dashboard: { style: 'crate', speedoMaxKmh: 0, speedoUnit: 'kmh', speedoMaxNative: 0, tachMaxRpm: 8000, tachRedlineStartRpm: 7000, hasShiftLights: true, reference: 'Provisório.' },
-  soundProfile: 'v8-cross-bigblock',
-});
-
 export const provisional458 = base({
   id: 'ferrari-458-italia',
   manufacturer: 'Ferrari',
