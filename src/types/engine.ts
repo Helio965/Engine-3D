@@ -117,6 +117,8 @@ export interface EngineSpec {
   cylinderMap: CylinderSlot[];
   /** Axial distance between consecutive crank slots (mm), when published. */
   slotPitchMm?: number;
+  /** Axial offset between the two banks of a V engine (mm), when published. */
+  bankOffsetMm?: number;
   crankType: string;
   lubrication: Lubrication;
   fuelSystem: string;
@@ -133,6 +135,8 @@ export interface PerformanceSpec {
   torqueNm: number;
   /** Peak torque rpm, or [from, to] for a plateau. */
   torqueRpm: number | [number, number];
+  /** Other published full-load torque points (e.g. "450 N·m from 3,500 rpm"). */
+  publishedTorquePoints?: { rpm: number; nm: number }[];
   idleRpm: number;
   idleStatus: FactStatus;
   /** Start of the red zone on the tachometer. */

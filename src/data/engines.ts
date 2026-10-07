@@ -2,7 +2,8 @@ import type { EngineDefinition, EngineId } from '../types/engine';
 import { bugattiVeyron } from './engines/bugattiVeyron';
 import { bugattiChiron } from './engines/bugattiChiron';
 import { nissanSkylineR34 } from './engines/nissanSkylineR34';
-import { provisional458, provisional812, provisionalHellcat, provisionalM5, provisionalW12, provisionalZz632 } from './engines/provisional';
+import { bmwM5E60 } from './engines/bmwM5E60';
+import { provisional458, provisional812, provisionalHellcat, provisionalW12, provisionalZz632 } from './engines/provisional';
 
 /**
  * Engine catalogue. To add an engine: create a data file in ./engines/
@@ -13,7 +14,7 @@ export const ENGINES: EngineDefinition[] = [
   bugattiVeyron,
   bugattiChiron,
   nissanSkylineR34,
-  provisionalM5,
+  bmwM5E60,
   provisionalHellcat,
   provisionalZz632,
   provisional458,

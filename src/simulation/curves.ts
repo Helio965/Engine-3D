@@ -75,6 +75,11 @@ export function torqueAnchors(def: EngineDefinition): CurvePoint[] {
   if (mid > idle + 200 && mid < tFrom - 200) {
     pts.push({ rpm: mid, value: p.torqueNm * (lowFrac + (1 - lowFrac) * 0.72) });
   }
+  for (const q of p.publishedTorquePoints ?? []) {
+    // a published point replaces the generic mid-range shape around it
+    for (let i = pts.length - 1; i >= 0; i--) if (pts[i].rpm > idle && Math.abs(pts[i].rpm - q.rpm) < 600) pts.splice(i, 1);
+    if (q.rpm > idle && q.rpm < tFrom) pts.push({ rpm: q.rpm, value: q.nm });
+  }
   pts.push({ rpm: tFrom, value: p.torqueNm });
   if (tTo > tFrom + 50) pts.push({ rpm: tTo, value: p.torqueNm });
   if (p.powerRpm > tTo + 50) {

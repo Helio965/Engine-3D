@@ -1,9 +1,25 @@
 import type { EngineDefinition } from '../../types/engine';
 import { row, src, tireRadius, calibratedDragArea } from '../helpers';
 
-// PROVISIONAL — architecture only; figures are replaced by the verified research data.
+/**
+ * Nissan Skyline GT-R V-spec (BNR34), Japanese market, 1999 (GF-BNR34,
+ * Jan 1999 – Aug 2000). Engine, gearbox, tyres and power/torque are shared
+ * with the standard GT-R and the V-spec II; the V-spec differs in weight
+ * (1,560 kg), aero parts and the ATTESA E-TS Pro active rear LSD.
+ */
 const S = {
-  nissan: src('nissan-heritage-r34', 'Nissan Heritage Collection — Skyline GT-R (BNR34)', 'Nissan', 'https://www.nissan-global.com/EN/HERITAGE/', true),
+  heritage: src('nissan-heritage-bnr34', 'Skyline GT-R V-spec II (2000: BNR34) — Nissan Heritage Collection', 'Nissan Motor Co., Ltd.', 'https://www.nissan-global.com/EN/HERITAGE_COLLECTION/280_skyline_gt-r_v-spec_ii.html', true),
+  heritageList: src('nissan-heritage-skyline', 'Nissan Heritage Collection — lista Skyline', 'Nissan Motor Co., Ltd.', 'https://www.nissan-global.com/EN/HERITAGE_COLLECTION/skyline.html', true),
+  catalogue: src('gulliver-bnr34', 'Skyline GT-R V-spec GF-BNR34 (1999.01–2000.08) — ficha de catálogo', 'Gulliver (221616.com)', 'https://221616.com/catalog/nissan/skyline/199805_200208/1501419/'),
+  jb: src('jbskyline-r34', 'R34 GT-R Specifications', 'JB Skyline (referência de entusiastas)', 'https://www.jbskyline.net/r34/gtr/specs/'),
+  bestcar: src('bestcar-rb26', '日産RB26DETTをいまこそ振り返る (retrospectiva RB26DETT)', 'Best Car Web (Kodansha)', 'https://bestcarweb.jp/feature/column/390620?prd=2'),
+  wiki: src('wiki-skyline-gtr', 'Nissan Skyline GT-R (usado como ponteiro)', 'Wikipedia', 'https://en.wikipedia.org/wiki/Nissan_Skyline_GT-R'),
+  sau: src('sau-r34-ratios', 'R34 gearbox / diff ratios (fórum)', 'SAU (Skylines Australia)', 'https://sau.com.au/forums/topic/480711-r34-gearbox-diff-ratios'),
+  haltech: src('haltech-rb', 'RB20/25/26 Engine (base de conhecimento ECU)', 'Haltech', 'https://support.haltech.com/portal/en/kb/articles/rb-engine'),
+  crower: src('crower-rb26-rods', 'Brian Crower RB26DETT rods 4.783 in / 121,5 mm (comprimento original)', 'Real Street Performance / Brian Crower', 'https://www.realstreetperformance.com/brian-crower-625-h-beam-rods-skyline-rb26dett-r32-r33-r34.html'),
+  paultan: src('paultan-nismo-meter', 'Nismo Heritage Parts reproduz o painel do R34 GT-R', 'paultan.org', 'https://paultan.org/2022/08/24/gismo-heritage-parts-r34-skyline-gtr/'),
+  jnc: src('jnc-nismo-gauges', 'NISMO reproduces Silvia S15 and Skyline R34 gauge clusters', 'Japanese Nostalgic Car', 'https://japanesenostalgiccar.com/nismo-reproduction-silvia-s15-and-skyline-r34-gauge-clusters'),
+  autoindustriya: src('autoindustriya-nismo', 'Nissan reproducing NISMO gauges for Skyline GT-R, Silvia', 'AutoIndustriya', 'https://www.autoindustriya.com/auto-industry-news/nissan-reproducing-nismo-gauges-for-skyline-gt-r-silvia.html'),
 };
 
 const TIRE = '245/40 ZR18';
@@ -11,10 +27,10 @@ const TIRE = '245/40 ZR18';
 export const nissanSkylineR34: EngineDefinition = {
   id: 'nissan-skyline-r34',
   manufacturer: 'Nissan',
-  vehicle: 'Skyline GT-R R34',
-  generation: 'BNR34 (1999–2002)',
+  vehicle: 'Skyline GT-R R34 V-spec',
+  generation: 'BNR34 (GF-BNR34), 1999–2002',
   year: 1999,
-  marketVersion: 'Japão',
+  marketVersion: 'Japão (JDM), V-spec, volante à direita',
   isCrateEngine: false,
   headline: '2.6 I6 BITURBO RB26DETT',
   engine: {
@@ -27,7 +43,7 @@ export const nissanSkylineR34: EngineDefinition = {
     boreMm: 86,
     strokeMm: 73.7,
     rodLengthMm: 121.5,
-    rodLengthStatus: 'estimated',
+    rodLengthStatus: 'reputable',
     compressionRatio: 8.5,
     valvesPerCylinder: 4,
     valvetrain: 'dohc',
@@ -35,11 +51,12 @@ export const nissanSkylineR34: EngineDefinition = {
     turbo: {
       count: 2,
       arrangement: 'parallel',
-      maxBoostBar: 0.8,
-      maxBoostStatus: 'estimated',
+      maxBoostBar: 0.91,
+      maxBoostStatus: 'reputable',
       fullBoostRpm: 4000,
       spoolTimeS: 0.6,
       maxShaftRpm: 180000,
+      // front turbo: cylinders 1–3, rear turbo: 4–6 (two 3-into-1 manifolds)
       feeds: [
         [1, 2, 3],
         [4, 5, 6],
@@ -48,9 +65,9 @@ export const nissanSkylineR34: EngineDefinition = {
     firingOrder: [1, 5, 3, 6, 2, 4],
     firingOrderStatus: 'reputable',
     cylinderMap: [1, 2, 3, 4, 5, 6].map((n, i) => ({ number: n, row: 0, slot: i })),
-    crankType: 'Virabrequim de 7 mancais, moentes a 120°',
+    crankType: 'Seis em linha, moentes a 120° (pares 1/6, 2/5, 3/4), 7 mancais',
     lubrication: 'wet',
-    fuelSystem: 'Injeção multiponto, seis corpos de borboleta individuais',
+    fuelSystem: 'Injeção multiponto (ECCS), seis borboletas individuais',
     inertiaKgM2: 0.14,
   },
   performance: {
@@ -66,14 +83,14 @@ export const nissanSkylineR34: EngineDefinition = {
     revLimitRpm: 8000,
   },
   drivetrain: {
-    transmission: 'Getrag 6 marchas manual',
+    transmission: 'Getrag 233 manual de 6 marchas',
     kind: 'manual',
     ratios: [3.827, 2.36, 1.685, 1.312, 1.0, 0.793],
-    reverseRatio: 3.28,
+    reverseRatio: 3.24,
     finalDrive: 3.545,
-    ratiosStatus: 'estimated',
+    ratiosStatus: 'reputable',
     paddleShift: false,
-    driveLayout: 'Integral ATTESA E-TS Pro',
+    driveLayout: 'Integral ATTESA E-TS Pro com diferencial traseiro ativo',
     rearTire: TIRE,
     tireRadiusM: tireRadius(TIRE),
     shiftTimeS: 0.45,
@@ -82,14 +99,16 @@ export const nissanSkylineR34: EngineDefinition = {
   vehicleSpec: {
     topSpeedKmh: 180,
     topSpeedLimited: true,
-    curbWeightKg: 1540,
-    dragAreaM2: calibratedDragArea(206, 250, 1540, 0.84),
+    topSpeedNote: 'Limitador japonês de 180 km/h (acordo da indústria). Velocidade sem limitador não publicada pela Nissan.',
+    curbWeightKg: 1560,
+    // Calibrated to an unrestricted ≈ 250 km/h (UK imports were limited at 250 km/h) — estimate.
+    dragAreaM2: calibratedDragArea(206, 250, 1560, 0.84, 0.013),
     rollingResistance: 0.013,
     fuelTankL: 65,
-    fuelType: 'Gasolina premium',
+    fuelType: 'Gasolina sem chumbo premium',
     enginePosition: 'Dianteiro longitudinal',
   },
-  fuel: { capacityL: 65, capacityStatus: 'estimated', label: 'Tanque', fuelType: 'Gasolina premium' },
+  fuel: { capacityL: 65, capacityStatus: 'reputable', label: 'Tanque', fuelType: 'Gasolina premium' },
   dashboard: {
     style: 'r34',
     speedoMaxKmh: 180,
@@ -98,11 +117,51 @@ export const nissanSkylineR34: EngineDefinition = {
     tachMaxRpm: 10000,
     tachRedlineStartRpm: 8000,
     hasShiftLights: false,
-    reference: 'Provisório.',
+    reference:
+      'Painel analógico sob capuz: conta-giros grande no centro (0–10 ×1000, estimado), velocímetro de 180 km/h à esquerda (JDM), manômetro de turbo à direita, pequenos marcadores de combustível e temperatura. Fundos pretos, números brancos, ponteiros vermelho-alaranjados. MFD colorido de 5,8" no console central com leituras de turbo (até 1,2 bar), óleo, água, borboleta e tensão.',
   },
   soundProfile: 'i6-twin-turbo',
-  visual: { summary: 'Seis em linha comprido, tampa de válvulas vermelha enrugada, dois turbos paralelos.', accent: '#c8102e' },
-  specs: [row('Configuração', '6 cilindros em linha, biturbo', 'official', [S.nissan.id])],
+  visual: {
+    summary: 'Seis em linha longo, tampas de comando vermelhas enrugadas, cobertura das bobinas no meio, plenum com seis borboletas no lado da admissão e dois turbos no lado do escape.',
+    accent: '#c8102e',
+  },
+  specs: [
+    row('Configuração', '6 cilindros em linha, DOHC 24V, biturbo com intercooler', 'official', [S.heritage.id, S.catalogue.id]),
+    row('Cilindrada', '2.568 cm³', 'official', [S.heritage.id]),
+    row('Diâmetro × curso', '86,0 × 73,7 mm', 'reputable', [S.jb.id], 'Reproduz a cilindrada oficial (2.568,7 cm³)'),
+    row('Biela', '121,5 mm (centro a centro)', 'reputable', [S.crower.id], 'Comprimento de bielas de reposição com medida original; sem documento Nissan'),
+    row('Taxa de compressão', '8,5:1', 'reputable', [S.catalogue.id]),
+    row('Aspiração', '2 turbos em paralelo (dianteiro: cil. 1–3, traseiro: 4–6), intercooler frontal', 'reputable', [S.catalogue.id, S.bestcar.id], 'A divisão 1–3 / 4–6 é o arranjo conhecido do RB26, não verificado em fonte primária'),
+    row('Pressão de turbo', '≈ 0,91 bar (685 mmHg)', 'reputable', [S.bestcar.id], 'Valor de revista, não publicado pela Nissan'),
+    row('Potência', '280 PS (206 kW / 276 hp) a 6.800 rpm', 'official', [S.heritage.id, S.catalogue.id], 'Limite voluntário japonês de 280 PS; a potência real é considerada maior'),
+    row('Torque', '392 N·m (40,0 kgfm) a 4.400 rpm', 'official', [S.heritage.id, S.catalogue.id]),
+    row('Marcha lenta', '≈ 900 rpm', 'estimated', undefined, 'Não publicada; valor típico da família RB'),
+    row('Faixa vermelha / corte', '≈ 8.000 rpm', 'estimated', undefined, 'Não publicados; estimados por fotos do painel'),
+    row('Ordem de ignição', '1-5-3-6-2-4', 'reputable', [S.haltech.id]),
+    row('Câmbio', 'Getrag 233, manual de 6 marchas', 'reputable', [S.catalogue.id, S.wiki.id]),
+    row('Relações', '3,827 · 2,360 · 1,685 · 1,312 · 1,000 · 0,793', 'reputable', [S.jb.id, S.sau.id]),
+    row('Ré', '3,240', 'estimated', [S.sau.id], 'Uma única listagem de fórum, não verificada'),
+    row('Relação final', '3,545', 'reputable', [S.jb.id, S.sau.id]),
+    row('Tração', 'Integral ATTESA E-TS Pro, LSD traseiro ativo (V-spec)', 'reputable', [S.catalogue.id, S.wiki.id]),
+    row('Pneus', '245/40 ZR18 (dianteiros e traseiros)', 'official', [S.heritage.id]),
+    row('Velocidade máxima', '180 km/h (limitador JDM)', 'reputable', [S.wiki.id]),
+    row('Peso', '1.560 kg (V-spec)', 'official', [S.heritage.id, S.catalogue.id]),
+    row('Tanque', '65 L', 'reputable', [S.catalogue.id]),
+    row('Combustível', 'Gasolina sem chumbo premium', 'reputable', [S.catalogue.id]),
+    row('Lubrificação', 'Cárter úmido', 'estimated', undefined, 'Arranjo conhecido do RB26; não verificado em fonte primária'),
+    row('Posição do motor', 'Dianteiro longitudinal', 'reputable', [S.catalogue.id]),
+    row('0–100 km/h', 'Não confirmado', 'unconfirmed', undefined, 'A Nissan não publicou tempo de aceleração'),
+  ],
   sources: Object.values(S),
-  estimates: ['Dados provisórios — aguardando pesquisa verificada'],
+  estimates: [
+    'Marcha lenta (900 rpm), faixa vermelha e corte (8.000 rpm)',
+    'Escala do conta-giros (10.000 rpm) e início da faixa vermelha no painel',
+    'Relação de ré (3,240)',
+    'Inércia rotativa, tempo de enchimento e rotação dos turbos',
+    'Cd·A calibrado para ≈ 250 km/h sem limitador (a Nissan não publica)',
+  ],
+  notes: [
+    'Versão escolhida: GT-R V-spec japonês de 1999. O V-spec II e o Nür (2002) não são misturados; o Nür tem velocímetro de 300 km/h.',
+    'A página Heritage "Skyline GT-R (1999: BNR34)" é o carro de corrida JGTC (2.708 cm³, 500 PS) e não foi usada.',
+  ],
 };

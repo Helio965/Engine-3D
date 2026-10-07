@@ -238,7 +238,7 @@ export function buildEngineLayout(spec: EngineSpec): EngineLayout {
 
   const bore = spec.boreMm / 1000;
   const pitch = slotPitch(spec);
-  const bankOffset = spec.layout === 'inline' ? 0 : Math.min(0.03, bore * 0.26);
+  const bankOffset = spec.layout === 'inline' ? 0 : spec.bankOffsetMm != null ? spec.bankOffsetMm / 1000 : Math.min(0.03, bore * 0.26);
   const maxSlot = Math.max(...spec.cylinderMap.map((c) => c.slot));
   const span = maxSlot * pitch + bankOffset;
 

@@ -183,7 +183,7 @@ function Crankshaft() {
   const pinGeo = geo('crank-pin', () => new THREE.CylinderGeometry(pinR, pinR, 1, seg(24)).rotateZ(Math.PI / 2));
 
   const throws = layout.throws;
-  const rodW = def.engine.layout === 'w' ? layout.slotPitchM * 0.38 : Math.min(0.024, bore * 0.24);
+  const rodW = def.engine.layout === 'w' ? layout.slotPitchM * 0.38 : Math.min(0.024, bore * 0.24, layout.bankOffsetM > 0 ? layout.bankOffsetM * 0.94 : Infinity);
 
   const pieces = useMemo(() => {
     const out: { kind: 'web' | 'pin' | 'main'; x: number; len?: number; angle: number }[] = [];

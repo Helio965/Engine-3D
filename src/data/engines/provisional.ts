@@ -33,23 +33,6 @@ function base(over: Partial<EngineDefinition> & Pick<EngineDefinition, 'id' | 'm
 
 const T = (size: string) => tireRadius(size);
 
-export const provisionalM5 = base({
-  id: 'bmw-m5-e60',
-  manufacturer: 'BMW',
-  vehicle: 'M5 E60',
-  headline: '5.0 V10 S85',
-  engine: {
-    name: 'BMW S85B50', code: 'S85B50', layout: 'v', cylinders: 10, bankAngleDeg: 90, displacementCc: 4999, boreMm: 92, strokeMm: 75.2, rodLengthMm: 140, rodLengthStatus: 'estimated',
-    compressionRatio: 12, valvesPerCylinder: 4, valvetrain: 'dohc', aspiration: 'na', firingOrder: [1, 6, 5, 10, 2, 7, 3, 8, 4, 9], firingOrderStatus: 'estimated',
-    cylinderMap: vMap(5, [1, 2, 3, 4, 5], [6, 7, 8, 9, 10]), crankType: 'split-pin', lubrication: 'wet', fuelSystem: 'port', inertiaKgM2: 0.2,
-  },
-  performance: { powerPs: 507, powerHp: 500, powerKw: 373, powerRpm: 7750, torqueNm: 520, torqueRpm: 6100, idleRpm: 700, idleStatus: 'estimated', redlineRpm: 8250, revLimitRpm: 8250 },
-  drivetrain: { transmission: 'SMG III 7', kind: 'smg', ratios: [3.985, 2.652, 1.806, 1.392, 1.159, 1.0, 0.833], reverseRatio: 3.985, finalDrive: 3.62, ratiosStatus: 'estimated', paddleShift: true, driveLayout: 'RWD', rearTire: '285/35 ZR19', tireRadiusM: T('285/35 ZR19'), shiftTimeS: 0.2, efficiency: 0.88 },
-  vehicleSpec: { topSpeedKmh: 250, topSpeedLimited: true, curbWeightKg: 1830, dragAreaM2: 0.7, rollingResistance: 0.012, fuelTankL: 70, fuelType: 'Gasolina', enginePosition: 'Dianteiro' },
-  dashboard: { style: 'e60', speedoMaxKmh: 330, speedoUnit: 'kmh', speedoMaxNative: 330, tachMaxRpm: 9000, tachRedlineStartRpm: 8250, hasShiftLights: false, reference: 'Provisório.' },
-  soundProfile: 'v10-na',
-});
-
 export const provisionalHellcat = base({
   id: 'dodge-challenger-hellcat',
   manufacturer: 'Dodge',
