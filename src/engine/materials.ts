@@ -146,6 +146,8 @@ export class MaterialLibrary {
   private byCategory = new Map<PartCategory, Set<THREE.Material>>();
   private baseOpacity = new WeakMap<THREE.Material, number>();
   private baseSide = new WeakMap<THREE.Material, THREE.Side>();
+  /** Materials whose texture alpha must always be honoured (lettering decals). */
+  private alpha = new WeakSet<THREE.Material>();
   readonly textures: TextureSet;
   readonly clipPlanes: THREE.Plane[] = [new THREE.Plane(new THREE.Vector3(0, 0, -1), 0)];
   state: Partial<Record<PartCategory, CategoryState>> = {};
@@ -213,6 +215,9 @@ export class MaterialLibrary {
     const hit = this.cache.get(k);
     if (hit) return hit;
     const m = new THREE.MeshStandardMaterial({ map: texture, transparent: true, metalness: 0.3, roughness: 0.45, polygonOffset: true, polygonOffsetFactor: -2 });
+    this.alpha.add(m);
+    m.alphaTest = 0.04;
+    m.depthWrite = false;
     this.baseOpacity.set(m, 1);
     this.baseSide.set(m, m.side);
     this.cache.set(k, m);
@@ -230,7 +235,7 @@ export class MaterialLibrary {
   private applyCategory(cat: PartCategory, m: THREE.Material) {
     const s = this.state[cat];
     const base = this.baseOpacity.get(m) ?? 1;
-    const naturallyTransparent = base < 1 || cat === 'combustion' || cat === 'flow';
+    const naturallyTransparent = base < 1 || cat === 'combustion' || cat === 'flow' || this.alpha.has(m);
     if (!s) return;
     const opacity = Math.min(base, s.opacity * base);
     const transparent = naturallyTransparent || opacity < 0.999 || s.ghost;
