@@ -36,8 +36,12 @@ function geom(ctx: EngineModelContext) {
   const icFront: Vec3 = [dims.frontX + 0.2, dims.deck * 0.15, 0.28];
   const icReturn: Vec3 = [dims.frontX + 0.2, dims.deck * 0.15, -0.28];
   const plenumInlet: Vec3 = [dims.frontX + 0.02, plenum[1], plenum[2]];
-  const airbox: Vec3 = [dims.frontX - 0.02, dims.deck + 0.1, turboZ + 0.12];
-  return { portY, plenum, itbZ, turboY, turboZ, turbos, turbine, compressor, icFront, icReturn, plenumInlet, airbox, R };
+  const airbox: Vec3 = [dims.frontX + 0.1, turboY + 0.1, turboZ + 0.07];
+  // suction pipe along the top of the exhaust side; boost pipe low along its outer side
+  const suctionY = turboY + 0.1;
+  const boostY = turboY - 0.1;
+  const boostZ = turboZ + 0.1;
+  return { portY, plenum, itbZ, turboY, turboZ, turbos, turbine, compressor, icFront, icReturn, plenumInlet, airbox, suctionY, boostY, boostZ, R };
 }
 
 export default function NissanRb26() {
@@ -61,6 +65,8 @@ export default function NissanRb26() {
     [lib],
   );
   const coverTop = dims.deck + dims.headHeight + dims.coverHeight * 0.8;
+  // compressor outlet: on top of the compressor housing
+  const outlet = (i: number): Vec3 => [g.compressor(i)[0], g.turboY - g.R * 0.2, g.turboZ + g.R * 0.9];
   const blue = 'blue';
 
   return (
@@ -135,35 +141,27 @@ export default function NissanRb26() {
 
       {/* charge air: compressors → front-mounted intercooler (off-engine) → plenum */}
       <Part kind="intercooler" label="Tubulação do intercooler (intercooler frontal fora do motor)" category="induction" explode={[0.18, 0.05, 0]}>
-        <Pipe points={[g.compressor(0), [g.compressor(0)[0] + 0.06, g.turboY + 0.05, g.turboZ + 0.04], [dims.frontX + 0.12, dims.deck * 0.4, 0.3], g.icFront]} radius={0.027} finish="polishedSteel" category="induction" />
-        <Pipe
-          points={[g.compressor(1), [g.compressor(1)[0] - 0.05, g.turboY + 0.1, g.turboZ + 0.05], [0, dims.deck * 0.95, g.turboZ + 0.09], [dims.frontX + 0.05, dims.deck * 0.75, 0.3], [dims.frontX + 0.18, dims.deck * 0.35, 0.29]]}
-          radius={0.027}
-          finish="polishedSteel"
-          category="induction"
-        />
+        {/* front compressor straight down to the intercooler; rear compressor along the outer side */}
+        <Pipe points={[outlet(0), [outlet(0)[0], g.boostY, g.boostZ - 0.02], [dims.frontX + 0.12, g.boostY - 0.02, g.boostZ - 0.04], g.icFront]} radius={0.027} finish="polishedSteel" category="induction" />
+        <Pipe points={[outlet(1), [outlet(1)[0], g.boostY, g.boostZ], [g.turbos[0].x - 0.06, g.boostY, g.boostZ], [dims.frontX + 0.1, g.boostY - 0.03, g.boostZ + 0.02], [dims.frontX + 0.2, g.icFront[1] + 0.03, g.icFront[2] + 0.05]]} radius={0.027} finish="polishedSteel" category="induction" />
         <Pipe points={[g.icReturn, [dims.frontX + 0.18, g.plenum[1] - 0.05, -0.27], [dims.frontX + 0.08, g.plenum[1], g.plenum[2] - 0.02], g.plenumInlet]} radius={0.034} finish="polishedSteel" category="induction" />
-        {[g.icFront, g.icReturn, [dims.frontX + 0.08, g.plenum[1], g.plenum[2] - 0.02] as Vec3].map((p, i) => (
+        {[g.icReturn, [dims.frontX + 0.08, g.plenum[1], g.plenum[2] - 0.02] as Vec3].map((p, i) => (
           <mesh key={i} position={p} material={lib.get('gloss', 'induction', '#1f5fbf', blue)} rotation={[0, 0, Math.PI / 2]}>
             <cylinderGeometry args={[0.037, 0.037, 0.05, 20]} />
           </mesh>
         ))}
       </Part>
-      {/* air box + suction pipes to the compressor inlets */}
-      <Part kind="airFilter" label="Caixa do filtro de ar" category="induction" explode={[0.1, 0.25, 0.15]}>
-        <Box position={g.airbox} size={[0.2, 0.12, 0.17]} finish="plastic" color="#17181b" category="induction" radius={0.03} />
+      {/* air box at the front corner + one suction pipe along the exhaust side to both compressor inlets */}
+      <Part kind="airFilter" label="Caixa do filtro de ar e tubo de sucção" category="induction" explode={[0.1, 0.25, 0.15]}>
+        <Box position={g.airbox} size={[0.14, 0.075, 0.12]} finish="plastic" color="#17181b" category="induction" radius={0.025} />
         {g.turbos.map((t, i) => {
           const c = g.compressor(i);
           const inlet: Vec3 = [c[0] + t.dir * g.R * 0.9, c[1], c[2]];
-          return (
-            <Pipe
-              key={i}
-              points={[inlet, [inlet[0] + t.dir * 0.05, inlet[1] + 0.04, inlet[2] + 0.02], [g.airbox[0] - 0.05 * (i + 1), g.airbox[1] - 0.02, g.airbox[2] - 0.02], g.airbox]}
-              radius={0.032}
-              finish="rubber"
-              category="induction"
-            />
-          );
+          const pts: Vec3[] =
+            i === 0
+              ? [inlet, [inlet[0] + 0.04, inlet[1] + 0.02, inlet[2]], [g.airbox[0] - 0.07, g.suctionY - 0.01, g.airbox[2] - 0.02]]
+              : [inlet, [inlet[0] - 0.04, inlet[1] + 0.03, inlet[2]], [inlet[0] - 0.02, g.suctionY, g.turboZ + 0.07], [g.turbos[0].x, g.suctionY, g.turboZ + 0.07], [g.airbox[0] - 0.07, g.suctionY, g.airbox[2] - 0.01]];
+          return <Pipe key={i} points={pts} radius={0.03} finish="rubber" category="induction" />;
         })}
       </Part>
     </group>
@@ -177,7 +175,7 @@ export const meta: ModelMeta = {
     return {
       intake: g.plenum,
       exhaust: g.turbine(0),
-      induction: [0, g.turboY, g.turboZ],
+      induction: [g.turbos[0].x, g.turboY, g.turboZ],
       pistons: [0, ctx.dims.deck * 0.6, 0],
       crankshaft: [0, 0, 0],
       valvetrain: [0, ctx.dims.deck + ctx.dims.headHeight * 0.7, 0],
@@ -191,7 +189,7 @@ export const meta: ModelMeta = {
     const air = ports.map((p) => {
       const ti = p.c.number <= 3 ? 0 : 1;
       const c = g.compressor(ti);
-      return [g.airbox, [c[0] + g.turbos[ti].dir * 0.06, c[1] + 0.03, c[2]], c, g.icFront, g.icReturn, g.plenumInlet, [p.c.axialM, g.plenum[1], g.plenum[2]], [p.c.axialM, g.portY + 0.045, g.itbZ], p.intake, p.chamber] as Vec3[];
+      return [g.airbox, [g.turbos[ti].x, g.suctionY, g.turboZ + 0.07], [c[0] + g.turbos[ti].dir * 0.06, c[1] + 0.03, c[2]], c, [c[0], g.boostY, g.boostZ], [ctx.dims.frontX + 0.1, g.boostY, g.boostZ], g.icFront, g.icReturn, g.plenumInlet, [p.c.axialM, g.plenum[1], g.plenum[2]], [p.c.axialM, g.portY + 0.045, g.itbZ], p.intake, p.chamber] as Vec3[];
     });
     const exhaust = ports.map((p) => {
       const ti = p.c.number <= 3 ? 0 : 1;

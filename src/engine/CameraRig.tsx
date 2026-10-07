@@ -53,7 +53,7 @@ export function presetFor(name: CameraPresetName, ctx: EngineModelContext, mod: 
     }
     case 'induction': {
       const t = up(a.induction ?? a.intake, c);
-      return { position: [t[0] + 0.3, t[1] + 0.25, t[2] + Math.sign(t[2] || 1) * 0.45], target: t };
+      return { position: [t[0] + 0.42, t[1] + 0.36, t[2] + Math.sign(t[2] || 1) * 0.66], target: t };
     }
     case 'fuel': {
       const t = up(a.fuel ?? a.intake, c);

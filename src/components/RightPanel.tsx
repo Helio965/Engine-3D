@@ -132,8 +132,16 @@ function FuelPanel({ def }: { def: EngineDefinition }) {
         </button>
       </div>
       <p className="note">
-        {def.fuel.capacityStatus === 'official' ? 'Capacidade oficial do veículo.' : 'Capacidade de bancada (parâmetro da simulação, não especificação do fabricante).'} Consumo calculado a partir da potência indicada, rotação e carga — não é medição certificada.
+        {fuelCaption(def)} Consumo calculado a partir da potência indicada, rotação e carga — não é medição certificada.
       </p>
     </section>
   );
+}
+
+function fuelCaption(def: EngineDefinition): string {
+  const { capacityStatus } = def.fuel;
+  if (def.isCrateEngine) return 'Célula de combustível de bancada (parâmetro da simulação; motor de caixa não tem tanque).';
+  if (capacityStatus === 'official') return 'Capacidade oficial do veículo.';
+  if (capacityStatus === 'reputable') return 'Capacidade do veículo segundo fonte confiável (não oficial).';
+  return 'Capacidade não publicada: valor estimado para a simulação.';
 }
