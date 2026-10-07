@@ -38,6 +38,7 @@ function lazyDash(style: DashboardStyle) {
 
 export function DashboardHost({ def }: { def: EngineDefinition }) {
   const t = useTelemetry((x) => x.t);
+  const reduceMotion = useApp((s) => s.reduceMotion);
   const Dash = useMemo(() => lazyDash(def.dashboard.style), [def.dashboard.style]);
   const onAt = useRef<number | null>(null);
   const powered = !!t && t.ignition !== 'off';
@@ -52,7 +53,7 @@ export function DashboardHost({ def }: { def: EngineDefinition }) {
   }, [def.dashboard.style]);
 
   return (
-    <section className="dash-host panel" aria-label={`Painel inspirado no ${def.manufacturer} ${def.vehicle}`}>
+    <section className={`dash-host panel${reduceMotion ? ' reduce-motion' : ''}`} aria-label={`Painel inspirado no ${def.manufacturer} ${def.vehicle}`}>
       <p className="panel-title">
         Painel · {def.manufacturer} {def.vehicle}
       </p>

@@ -240,3 +240,10 @@ input[type=range] { accent-color: var(--accent); }
   .brand { font-size: 0; gap: 0; }
   .hdr-engine .l1 { font-size: 13px; }
 }
+
+/* dashboards */
+@keyframes dash-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: .15; } }
+.dash-blink { animation: dash-blink .28s steps(1) infinite; }
+@media (prefers-reduced-motion: reduce) { .dash-blink { animation: none; } }
+.reduce-motion .dash-blink { animation: none; }
+.dash-svg { display: block; width: 100%; height: auto; }
