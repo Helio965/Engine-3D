@@ -5,7 +5,9 @@ import { nissanSkylineR34 } from './engines/nissanSkylineR34';
 import { bmwM5E60 } from './engines/bmwM5E60';
 import { dodgeChallengerHellcat } from './engines/dodgeChallengerHellcat';
 import { chevroletZz632 } from './engines/chevroletZz632';
-import { provisional458, provisional812, provisionalW12 } from './engines/provisional';
+import { ferrari458Italia } from './engines/ferrari458Italia';
+import { ferrari812Superfast } from './engines/ferrari812Superfast';
+import { vwW12Concept } from './engines/vwW12Concept';
 
 /**
  * Engine catalogue. To add an engine: create a data file in ./engines/
@@ -19,9 +21,9 @@ export const ENGINES: EngineDefinition[] = [
   bmwM5E60,
   dodgeChallengerHellcat,
   chevroletZz632,
-  provisional458,
-  provisional812,
-  provisionalW12,
+  ferrari458Italia,
+  ferrari812Superfast,
+  vwW12Concept,
 ];
 
 export const ENGINE_BY_ID = Object.fromEntries(ENGINES.map((e) => [e.id, e])) as Record<EngineId, EngineDefinition>;

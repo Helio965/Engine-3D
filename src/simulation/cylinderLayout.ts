@@ -85,6 +85,8 @@ export function bankOfRow(spec: EngineSpec, row: number): number {
  * The UI always labels it as illustrative.
  */
 export function illustrativeFiringOrder(spec: EngineSpec): number[] {
+  const hint = spec.unconfirmedFiringOrder;
+  if (hint && hint.length === spec.cylinders && spec.cylinderMap.every((c) => hint.includes(c.number))) return hint;
   if (spec.layout !== 'inline') {
     const paired = pairedFiringOrder(spec);
     if (paired) return paired;

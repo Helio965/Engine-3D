@@ -110,6 +110,11 @@ export interface EngineSpec {
   firingOrder: number[] | null;
   firingOrderStatus: FactStatus;
   /**
+   * Order reported only by secondary sources (forums, repair sites) and not
+   * confirmed: used for the animation, which is still labelled illustrative.
+   */
+  unconfirmedFiringOrder?: number[];
+  /**
    * Firing intervals in crank degrees between consecutive cylinders of the
    * firing order (length = cylinders). Defaults to even firing (720/n).
    */

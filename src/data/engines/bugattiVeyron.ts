@@ -122,14 +122,14 @@ export const bugattiVeyron: EngineDefinition = {
   fuel: { capacityL: 100, capacityStatus: 'official', label: 'Tanque', fuelType: 'Gasolina 98 RON' },
   dashboard: {
     style: 'veyron',
-    speedoMaxKmh: 420,
+    speedoMaxKmh: 450,
     speedoUnit: 'kmh',
-    speedoMaxNative: 420,
+    speedoMaxNative: 450,
     tachMaxRpm: 8000,
     tachRedlineStartRpm: 6600,
     hasShiftLights: false,
     reference:
-      'Cluster original de cinco mostradores analógicos de fundo preto: conta-giros central 0–8, medidor de potência "POWER" em PS (até 1001) à esquerda, velocímetro em km/h à direita (numerais a cada 30 km/h) e dois mostradores menores. Sem shift light no 16.4 original. Final da escala do velocímetro não confirmado (420 km/h usado como aproximação).',
+      'Cluster original de cinco mostradores analógicos de fundo preto: conta-giros central 0–8, medidor de potência "POWER" em PS (até 1001) à esquerda, velocímetro em km/h à direita (numerais a cada 30 km/h) e dois mostradores menores. Sem shift light no 16.4 original. Final da escala do velocímetro não confirmado: 450 km/h (= 280 mph do painel americano, múltiplo de 30) usado como estimativa.',
   },
   soundProfile: 'w16-quad-turbo',
   visual: {
