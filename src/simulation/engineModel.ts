@@ -57,11 +57,6 @@ export function throttleArea(plate: number): number {
   return Math.pow(p, 1.5);
 }
 
-export function manifoldTarget(plate: number, rpm: number): number {
-  const air = THROTTLE_FLOW_RPM * throttleArea(plate);
-  return Math.min(1, Math.max(MIN_MANIFOLD_FRACTION, air / Math.max(rpm, 120)));
-}
-
 /**
  * Indicated torque at the given absolute manifold pressure.
  * @param brakeFullLoad published full-load brake torque at this rpm (Nm)

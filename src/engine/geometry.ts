@@ -18,12 +18,6 @@ export function placeBetween(obj: THREE.Object3D, a: THREE.Vector3, b: THREE.Vec
   if (scaleLength) obj.scale.set(1, len, 1);
 }
 
-/** Orients an object so its local +Y points along `dir`. */
-export function alignY(obj: THREE.Object3D, dir: THREE.Vector3) {
-  tmpQ.setFromUnitVectors(UP, tmpV.copy(dir).normalize());
-  obj.quaternion.copy(tmpQ);
-}
-
 /** Crank web / counterweight outline: egg shape with the pin lobe at +Y. */
 export function webShape(r: number, pinR: number, cwR: number, segments = 48): THREE.Shape {
   const s = new THREE.Shape();

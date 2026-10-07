@@ -54,11 +54,6 @@ export function speedFromRpm(dt: DrivetrainSpec, gear: number, rpm: number): num
   return v * MS_TO_KMH * (gear < 0 ? -1 : 1);
 }
 
-/** Maximum speed reachable in a gear at a given rpm limit. */
-export function gearTopSpeed(dt: DrivetrainSpec, gear: number, limitRpm: number): number {
-  return Math.abs(speedFromRpm(dt, gear, limitRpm));
-}
-
 export interface ShiftPolicyInput {
   rpm: number;
   gear: number;

@@ -44,11 +44,6 @@ export function pistonTravelFromTdc(localDeg: number, r: number, l: number): num
   return r + l - pistonPinDistance(localDeg, r, l);
 }
 
-/** Connecting-rod angle relative to the cylinder axis (radians). */
-export function rodAngle(localDeg: number, r: number, l: number): number {
-  return Math.asin((r / l) * Math.sin(localDeg * DEG));
-}
-
 export function strokePhase(cycleDeg: number): StrokePhase {
   const c = wrap720(cycleDeg);
   if (c < 180) return 'power';

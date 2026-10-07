@@ -125,9 +125,6 @@ export function Needle({
   );
 }
 
-/** Smoothly animated value hook-less helper: dashboards receive 30 Hz telemetry and use CSS transitions. */
-export const needleStyle = { transition: 'transform 60ms linear' } as const;
-
 /** Needle-sweep self-test on ignition (common on modern clusters): returns 0→1→0 in ~1.6 s. */
 export function sweepFactor(sinceIgnition: number): number {
   if (sinceIgnition < 0 || sinceIgnition > 1.6) return 0;

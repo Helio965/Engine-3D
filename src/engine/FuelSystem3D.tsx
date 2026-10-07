@@ -4,7 +4,6 @@ import * as THREE from 'three';
 import { useEngine, type EngineModelContext } from './EngineContext';
 import { Part } from './Part';
 import { simRef } from '../state/simulationStore';
-import { useApp } from '../state/appStore';
 import type { ModelMeta } from './models/types';
 import type { Vec3 } from './parts/Plumbing';
 import { CONNECT_TIME_S, DISCONNECT_TIME_S } from '../simulation/fuel';
@@ -220,12 +219,4 @@ function Dispenser({ filler, floorY }: { filler: Vec3; floorY: number }) {
       ))}
     </group>
   );
-}
-
-export function useAutoShowFuelOnRefuel() {
-  useFrame(() => {
-    const sim = simRef.current;
-    const s = useApp.getState();
-    if (sim && sim.fuel.refuel !== 'idle' && !s.showFuelSystem) s.set({ showFuelSystem: true });
-  });
 }

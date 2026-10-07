@@ -1,7 +1,6 @@
 import type { EngineModelContext } from '../EngineContext';
 import type { Vec3 } from '../parts/Plumbing';
 import { portPoint, intakeSideOf } from '../parts/Plumbing';
-import type { FlowPaths } from './types';
 
 /** Helpers shared by the per-engine models (flow paths, anchors, sizes). */
 
@@ -51,8 +50,4 @@ export function intakePaths(ctx: EngineModelContext, upstreamFor: (cyl: number) 
 export function fuelRailPaths(ctx: EngineModelContext, inlet: Vec3, intakeInside = true, inlineSide: 1 | -1 = 1): Vec3[][] {
   const ports = cylinderPorts(ctx, intakeInside, inlineSide);
   return ports.map((p) => [inlet, [p.intake[0], p.intake[1] + 0.04, p.intake[2]], p.intake, p.chamber]);
-}
-
-export function emptyFlows(): FlowPaths {
-  return { air: [], fuel: [], exhaust: [], coolant: [] };
 }

@@ -49,9 +49,6 @@ export type PartCategory =
   | 'combustion'
   | 'flow';
 
-/** Categories that form the outer shell and get faded/clipped. */
-export const SHELL: PartCategory[] = ['block', 'head', 'cover', 'induction', 'exhaust', 'accessory', 'turbo', 'supercharger'];
-
 interface FinishDef {
   color: string;
   metalness: number;
