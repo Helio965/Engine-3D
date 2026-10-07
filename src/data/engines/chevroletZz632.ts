@@ -116,5 +116,7 @@ export const chevroletZz632: EngineDefinition = {
   notes: [
     'Sem veículo de produção: disponíveis apenas os modos Neutro e Dinamômetro.',
     'A ordem de ignição oficial 1-8-7-2-6-5-4-3 corrige a ordem big-block tradicional citada no briefing.',
+    'O part number do briefing (19433031) não aparece em nenhum documento Chevrolet; o atual é 19432060 (lançamento 19432058).',
+    'Cilindrada: 10.348 cm³ (comunicado) × 631,5 pol³ / 10,35 L (guia de instalação).',
   ],
 };

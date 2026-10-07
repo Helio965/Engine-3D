@@ -156,5 +156,7 @@ export const bmwM5E60: EngineDefinition = {
   notes: [
     'Simulação usa o modo P500 (507 PS); o carro parte em P400 (400 PS).',
     'O motor não é split-pin: a BMW descreve cinco moentes a 72° com duas bielas cada, o que dá ignição irregular.',
+    '0–100 km/h: 4,7 s na ficha do Reino Unido × 4,6 s no manual ST505.',
+    'Peso: 1.830 kg pela norma UE (com 75 kg de motorista e bagagem) × 1.755 kg DIN.',
   ],
 };

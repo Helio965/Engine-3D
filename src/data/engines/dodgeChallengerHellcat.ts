@@ -157,5 +157,8 @@ export const dodgeChallengerHellcat: EngineDefinition = {
   notes: [
     'Configuração com câmbio automático de 8 marchas. O manual Tremec TR-6060 não tem relações oficiais confirmadas e não foi usado.',
     'Dados de diâmetro, curso, compressão e rotações vêm de uma reprodução da ficha FCA do Charger SRT Hellcat 2015 (mesmo motor); por isso aparecem como "reputable".',
+    'Torque a 4.800 rpm (ficha FCA reproduzida) × 4.000 rpm (resumo da AP); 4.800 rpm usado.',
+    'O peso de 4.575 lb da ficha reproduzida é do Charger (4 portas) e não foi usado.',
+    'O código do motor (frequentemente citado como ESD) não foi confirmado pela FCA.',
   ],
 };

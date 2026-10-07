@@ -166,5 +166,11 @@ export const bugattiChiron: EngineDefinition = {
     'Inércia rotativa e dinâmica dos turbos',
     'Ordem de ignição da animação (ilustrativa, intervalos oficiais de 45°)',
   ],
-  notes: ['Chiron original 2016 (1.500 PS). Chiron Sport, Pur Sport e Super Sport não são misturados.'],
+  notes: [
+    'Chiron original 2016 (1.500 PS). Chiron Sport, Pur Sport e Super Sport não são misturados.',
+    '0–100 km/h: 2,4 s na ficha final × menos de 2,5 s na ficha preliminar de 2016.',
+    'Turbos: a Bugatti descreve dois turbos do mesmo tamanho por lado em funcionamento sequencial; algumas reportagens falam em turbos de tamanhos diferentes.',
+    'Rotação máxima de troca 6.700 rpm; o corte exato (6.700–6.800 rpm) não foi confirmado.',
+    'Velocímetro de 500 km/h no carro europeu; os carros dos EUA usam escala em mph.',
+  ],
 };

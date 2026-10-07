@@ -149,5 +149,9 @@ export const ferrari812Superfast: EngineDefinition = {
     'Escala do conta-giros (10.000 rpm) e do velocímetro virtual (360 km/h)',
     'Cd·A calibrado para 340 km/h com 588 kW',
   ],
-  notes: ['O 812 GTS e o 812 Competizione (830 cv, 9.500 rpm) não foram misturados.'],
+  notes: [
+    'O 812 GTS e o 812 Competizione (830 cv, 9.500 rpm) não foram misturados.',
+    'Compressão 13,64:1 (ficha Ferrari); 13,6:1 é o mesmo valor arredondado.',
+    'Pneu traseiro oficial 315/35 ZR20; o conceptcarz lista 255/35 ZR20 por engano.',
+  ],
 };

@@ -151,5 +151,8 @@ export const ferrari458Italia: EngineDefinition = {
   notes: [
     'A cor do fundo do conta-giros era opcional (amarelo, vermelho ou branco); o amarelo é usado aqui.',
     'O 458 Speciale (605 CV) e o 458 Spider não foram misturados.',
+    'Cilindrada: 4.497 cm³ (ferrari.com) × 4.499 cm³ (comunicado de 2009 e auto motor und sport).',
+    'Potência em kW: 419 (Ferrari, AMS) × 425 em uma reprodução de comunicado (provável erro).',
+    'O velocímetro digital fica na TFT direita (o briefing indicava a esquerda); os LEDs de troca no volante eram opcionais.',
   ],
 };

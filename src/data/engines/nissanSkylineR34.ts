@@ -163,5 +163,7 @@ export const nissanSkylineR34: EngineDefinition = {
   notes: [
     'Versão escolhida: GT-R V-spec japonês de 1999. O V-spec II e o Nür (2002) não são misturados; o Nür tem velocímetro de 300 km/h.',
     'A página Heritage "Skyline GT-R (1999: BNR34)" é o carro de corrida JGTC (2.708 cm³, 500 PS) e não foi usada.',
+    'Torque: 392 N·m oficial (40,0 kgfm); o JB Skyline cita 397 N·m, que não corresponde a 40,0 kgfm.',
+    'Peso: 1.540 kg no GT-R padrão e 1.560 kg no V-spec (usado).',
   ],
 };

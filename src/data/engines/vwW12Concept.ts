@@ -156,5 +156,7 @@ export const vwW12Concept: EngineDefinition = {
   notes: [
     'Versão: W12 Syncro amarelo de 1997. O Roadster de 1998 (tração traseira) e o W12 Nardò de 2001 (6.0, 600 PS) não foram misturados.',
     'A imagem de referência enviada mostra a tampa do W12 6.0 de produção, não o motor do estudo de 1997.',
+    'O ArchivioPrototipi lista 600 cv para o W12 Syncro: é o número do W12 Nardò de 2001 e foi rejeitado.',
+    'Torque a 3.000 rpm (Ultimatecarpage) × 4.500 rpm (fonte não identificada); 3.000 rpm usado.',
   ],
 };

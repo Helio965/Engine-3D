@@ -173,5 +173,8 @@ export const bugattiVeyron: EngineDefinition = {
   notes: [
     'Configuração original 16.4 (1.001 PS). Super Sport / Grand Sport Vitesse (1.200 PS, 1.500 N·m) não são misturados.',
     'A imagem de referência enviada mostra um W16 de Chiron; o Veyron tem turbos 69% menores e tubos de admissão escuros.',
+    'Curso: 86,0 mm (folheto Bugatti, bate com 7.993 cm³) × 86,05 mm (Wikipedia alemã) × 86,1 mm (Car and Driver).',
+    'Faixa de torque: 2.200–5.500 rpm (ficha técnica Bugatti) × 2.200–5.000 rpm (comunicados de 2019 e 2025).',
+    'Peso do motor: 490 kg (Bugatti 2015) × cerca de 400 kg (Bugatti 2022).',
   ],
 };
