@@ -104,7 +104,7 @@ export const LOAD_STEPS: Omit<LoadStep, 'done'>[] = [
 export const useApp = create<AppState>((set, get) => ({
   phase: 'intro',
   engineId: 'bugatti-chiron',
-  loading: null,
+  loading: { engineId: 'bugatti-chiron', steps: LOAD_STEPS.map((s) => ({ ...s, done: false })) },
 
   viewMode: 'complete',
   housingOpacity: 0.35,

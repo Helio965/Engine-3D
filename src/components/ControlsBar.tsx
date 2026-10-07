@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { EngineDefinition } from '../types/engine';
 import { useApp, FUEL_TIME_SCALES } from '../state/appStore';
 import { simRef, useTelemetry } from '../state/simulationStore';
@@ -12,6 +12,7 @@ export function ControlsBar({ def }: { def: EngineDefinition }) {
   const sound = useApp((s) => s.sound);
   const set = useApp((s) => s.set);
   const [pedal, setPedal] = useState(0);
+  const dragging = useRef(false);
   const [target, setTarget] = useState(0);
   const [dynoRpm, setDynoRpm] = useState(3000);
 
@@ -48,7 +49,8 @@ export function ControlsBar({ def }: { def: EngineDefinition }) {
 
   const cruise = mode === 'drive' && t?.driveControl === 'cruise';
   const sweep = mode === 'dyno' && t?.dynoPhase !== 'idle';
-  const shownPedal = cruise || sweep ? (t?.pedal ?? 0) : pedal;
+  // keyboard shortcuts also move the pedal: follow the simulation unless the slider is being dragged
+  const shownPedal = cruise || sweep || !dragging.current ? (t?.pedal ?? pedal) : pedal;
 
   return (
     <section className="controls" aria-label="Controles da simulação">
@@ -78,7 +80,9 @@ export function ControlsBar({ def }: { def: EngineDefinition }) {
           disabled={cruise || sweep}
           aria-label="Acelerador"
           onChange={(e) => changePedal(+e.target.value)}
-          onPointerUp={() => void 0}
+          onPointerDown={() => (dragging.current = true)}
+          onPointerUp={() => (dragging.current = false)}
+          onBlur={() => (dragging.current = false)}
         />
         <span className="val">
           {Math.round(shownPedal * 100)}% pedal · borboleta {Math.round((t?.throttlePlate ?? 0) * 100)}%

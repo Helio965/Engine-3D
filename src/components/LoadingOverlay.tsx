@@ -4,7 +4,8 @@ import { useApp } from '../state/appStore';
 /** Real loading progress: each step completes when that resource is actually ready. */
 export function LoadingOverlay({ def }: { def: EngineDefinition }) {
   const loading = useApp((s) => s.loading);
-  if (!loading) return null;
+  const phase = useApp((s) => s.phase);
+  if (!loading || phase === 'intro') return null;
   const done = loading.steps.filter((s) => s.done).length;
   const pct = Math.round((done / loading.steps.length) * 100);
   const name = `${def.manufacturer} ${def.engine.layout === 'w' ? `W${def.engine.cylinders}` : def.engine.code}`.toUpperCase();

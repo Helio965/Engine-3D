@@ -37,6 +37,7 @@ export function Scene({ def, onModel }: { def: EngineDefinition; onModel?: (ctx:
       camera={{ position: [1.6, 1.0, 1.6], fov: 34, near: 0.01, far: 60 }}
       gl={{ antialias: quality !== 'low', powerPreference: 'high-performance', preserveDrawingBuffer: true }}
       onCreated={({ gl }) => {
+        (window as unknown as { __gl?: THREE.WebGLRenderer }).__gl = gl;
         gl.toneMapping = THREE.ACESFilmicToneMapping;
         gl.toneMappingExposure = 1.05;
         gl.localClippingEnabled = true;

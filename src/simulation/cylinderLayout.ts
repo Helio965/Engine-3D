@@ -85,9 +85,9 @@ export function bankOfRow(spec: EngineSpec, row: number): number {
  * The UI always labels it as illustrative.
  */
 export function illustrativeFiringOrder(spec: EngineSpec): number[] {
-  if (spec.layout === 'w') {
-    const w = wFiringOrder(spec);
-    if (w) return w;
+  if (spec.layout !== 'inline') {
+    const paired = pairedFiringOrder(spec);
+    if (paired) return paired;
   }
   const nums = spec.cylinderMap.map((c) => c.number);
   const n = nums.length;
@@ -148,13 +148,13 @@ export function illustrativeFiringOrder(spec: EngineSpec): number[] {
 }
 
 /**
- * Constructive even-firing order for W engines: in every crank slot the bank-B
+ * Constructive even-firing order for two-bank (V and W) engines: in every crank slot the bank-B
  * cylinder fires m intervals before the bank-A cylinder, where m·interval is
  * the multiple of the firing interval closest to the angle between the banks.
  * The two rods of a slot then sit on (nearly) the same throw. Bank-A firings
  * hop along the crank to keep consecutive pulses far apart.
  */
-function wFiringOrder(spec: EngineSpec): number[] | null {
+function pairedFiringOrder(spec: EngineSpec): number[] | null {
   const n = spec.cylinders;
   const interval = 720 / n;
   const m = Math.max(1, Math.round(spec.bankAngleDeg / interval));

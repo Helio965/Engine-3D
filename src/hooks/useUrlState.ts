@@ -12,8 +12,7 @@ export function useUrlState() {
     const p = new URLSearchParams(window.location.search);
     const s = useApp.getState();
     const engine = p.get('engine') as EngineId | null;
-    if (engine && ENGINES.some((e) => e.id === engine)) s.setEngine(engine);
-    else s.setEngine(s.engineId);
+    if (engine && engine !== s.engineId && ENGINES.some((e) => e.id === engine)) s.setEngine(engine);
     const view = p.get('view') as ViewMode | null;
     if (view) s.set({ viewMode: view });
     if (p.get('intro') === '0') s.set({ phase: 'lab' });
