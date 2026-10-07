@@ -40,9 +40,11 @@ export function DashboardHost({ def }: { def: EngineDefinition }) {
   const t = useTelemetry((x) => x.t);
   const reduceMotion = useApp((s) => s.reduceMotion);
   const Dash = useMemo(() => lazyDash(def.dashboard.style), [def.dashboard.style]);
+  // the ignition self-test sweep runs in wall-clock time, also in slow motion
   const onAt = useRef<number | null>(null);
   const powered = !!t && t.ignition !== 'off';
-  if (powered && onAt.current === null && t) onAt.current = t.time;
+  const now = performance.now() / 1000;
+  if (powered && onAt.current === null) onAt.current = now;
   if (!powered) onAt.current = null;
   useEffect(() => {
     // dashboards already cached do not trigger the lazy loader again
@@ -58,7 +60,7 @@ export function DashboardHost({ def }: { def: EngineDefinition }) {
         Painel · {def.manufacturer} {def.vehicle}
       </p>
       <Suspense fallback={<div style={{ height: 210 }} />}>
-        {t && <Dash def={def} t={t} powered={powered} sinceIgnition={powered && onAt.current !== null ? t.time - onAt.current : -1} />}
+        {t && <Dash def={def} t={t} powered={powered} sinceIgnition={powered && onAt.current !== null ? now - onAt.current : -1} />}
       </Suspense>
       <p className="dash-ref">
         Inspirado no painel real (recriado em vetor; não é fotografia): {def.dashboard.reference}
